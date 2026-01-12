@@ -40,33 +40,33 @@ const SummaryCards = ({ filteredInvoices }) => {
       title: 'Total Outstanding',
       value: formatCurrency(summary.totalOutstanding),
       subtitle: 'Pending + Overdue',
-      bgColor: 'bg-blue-50',
-      textColor: 'text-blue-700',
-      borderColor: 'border-blue-200',
+      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+      textColor: 'text-blue-700 dark:text-blue-300',
+      borderColor: 'border-blue-200 dark:border-blue-700',
     },
     {
       title: 'Total Overdue',
       value: formatCurrency(summary.totalOverdue),
       subtitle: 'Past due date',
-      bgColor: 'bg-red-50',
-      textColor: 'text-red-700',
-      borderColor: 'border-red-200',
+      bgColor: 'bg-red-50 dark:bg-red-900/20',
+      textColor: 'text-red-700 dark:text-red-300',
+      borderColor: 'border-red-200 dark:border-red-700',
     },
     {
       title: 'Total Paid (This Month)',
       value: formatCurrency(summary.totalPaidThisMonth),
       subtitle: 'Paid in current month',
-      bgColor: 'bg-green-50',
-      textColor: 'text-green-700',
-      borderColor: 'border-green-200',
+      bgColor: 'bg-green-50 dark:bg-green-900/20',
+      textColor: 'text-green-700 dark:text-green-300',
+      borderColor: 'border-green-200 dark:border-green-700',
     },
     {
       title: 'Average Payment Delay',
       value: `${summary.avgDelay} days`,
       subtitle: 'For paid invoices',
-      bgColor: 'bg-purple-50',
-      textColor: 'text-purple-700',
-      borderColor: 'border-purple-200',
+      bgColor: 'bg-purple-50 dark:bg-purple-900/20',
+      textColor: 'text-purple-700 dark:text-purple-300',
+      borderColor: 'border-purple-200 dark:border-purple-700',
     },
   ];
 
@@ -83,7 +83,7 @@ const SummaryCards = ({ filteredInvoices }) => {
           <p className={`text-2xl font-bold ${card.textColor} mb-1`}>
             {card.value}
           </p>
-          <p className="text-xs text-gray-600">{card.subtitle}</p>
+          <p className="text-xs text-gray-600 dark:text-gray-400">{card.subtitle}</p>
         </div>
       ))}
     </div>

@@ -6,9 +6,9 @@ const InvoiceCard = ({ invoice, onMarkAsPaid }) => {
 
   const getStatusBadge = (status) => {
     const styles = {
-      paid: 'bg-green-100 text-green-800 border-green-300',
-      pending: 'bg-yellow-100 text-yellow-800 border-yellow-300',
-      overdue: 'bg-red-100 text-red-800 border-red-300',
+      paid: 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border-green-300 dark:border-green-700',
+      pending: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 border-yellow-300 dark:border-yellow-700',
+      overdue: 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300 border-red-300 dark:border-red-700',
     };
     
     return (
@@ -30,37 +30,37 @@ const InvoiceCard = ({ invoice, onMarkAsPaid }) => {
     } else if (invoice.status === 'overdue') {
       return <span className="text-red-600 font-bold">Overdue by {daysInfo.days} days</span>;
     } else {
-      return <span className="text-gray-600">Due in {daysInfo.days} days</span>;
+      return <span className="text-gray-600 dark:text-gray-400">Due in {daysInfo.days} days</span>;
     }
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="flex-1 grid grid-cols-1 md:grid-cols-5 gap-4">
           <div>
-            <p className="text-xs text-gray-500 mb-1">Invoice Number</p>
-            <p className="font-semibold text-gray-900">{invoice.id}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Invoice Number</p>
+            <p className="font-semibold text-gray-900 dark:text-white">{invoice.id}</p>
           </div>
           
           <div>
-            <p className="text-xs text-gray-500 mb-1">Customer Name</p>
-            <p className="font-medium text-gray-900">{invoice.customerName}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Customer Name</p>
+            <p className="font-medium text-gray-900 dark:text-white">{invoice.customerName}</p>
           </div>
           
           <div>
-            <p className="text-xs text-gray-500 mb-1">Invoice Date</p>
-            <p className="text-gray-900">{formatDate(invoice.invoiceDate)}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Invoice Date</p>
+            <p className="text-gray-900 dark:text-gray-100">{formatDate(invoice.invoiceDate)}</p>
           </div>
           
           <div>
-            <p className="text-xs text-gray-500 mb-1">Due Date</p>
-            <p className="text-gray-900">{formatDate(invoice.dueDate)}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Due Date</p>
+            <p className="text-gray-900 dark:text-gray-100">{formatDate(invoice.dueDate)}</p>
           </div>
           
           <div>
-            <p className="text-xs text-gray-500 mb-1">Amount</p>
-            <p className="font-semibold text-gray-900">{formatCurrency(invoice.amount)}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Amount</p>
+            <p className="font-semibold text-gray-900 dark:text-white">{formatCurrency(invoice.amount)}</p>
           </div>
         </div>
 
@@ -73,7 +73,7 @@ const InvoiceCard = ({ invoice, onMarkAsPaid }) => {
           {invoice.status !== 'paid' && (
             <button
               onClick={() => onMarkAsPaid(invoice.id)}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm font-medium whitespace-nowrap"
+              className="px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors text-sm font-medium whitespace-nowrap"
             >
               Mark as Paid
             </button>
