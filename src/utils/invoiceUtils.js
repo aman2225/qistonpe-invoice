@@ -32,6 +32,11 @@ export const calculateDays = (dueDate, paymentDate) => {
     payment.setHours(0, 0, 0, 0);
     const diffTime = payment - due;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) {
+      return { type: 'ontime', days: 0 };
+    }
+    
     return { type: payment < due ? 'early' : 'late', days: Math.abs(diffDays) };
   }
   

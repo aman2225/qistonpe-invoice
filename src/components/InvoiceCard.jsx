@@ -24,7 +24,7 @@ const InvoiceCard = ({ invoice, onMarkAsPaid }) => {
         return <span className="text-green-600 font-medium">Paid {daysInfo.days} days early</span>;
       } else if (daysInfo.type === 'late') {
         return <span className="text-orange-600 font-medium">Paid {daysInfo.days} days late</span>;
-      } else {
+      } else if (daysInfo.type === 'ontime') {
         return <span className="text-green-600 font-medium">Paid on time</span>;
       }
     } else if (invoice.status === 'overdue') {
