@@ -10,6 +10,7 @@ const InvoiceList = () => {
   const [sortOrder, setSortOrder] = useState('desc');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const itemsPerPage = 10;
 
   // Filter invoices
@@ -65,12 +66,24 @@ const InvoiceList = () => {
   // Reset to page 1 when filters change
   React.useEffect(() => {
     setCurrentPage(1);
+    setIsLoading(false);
   }, [statusFilter, searchQuery, sortBy, sortOrder]);
 
   const handleMarkAsPaid = useCallback((invoiceId) => {
     const today = new Date().toISOString().split('T')[0];
     markAsPaid(invoiceId, today);
   }, [markAsPaid]);
+
+  const handlePageChange = useCallback((newPage) => {
+    if (newPage === currentPage) return;
+    
+    setIsLoading(true);
+    // Simulate loading delay for realistic UX
+    setTimeout(() => {
+      setCurrentPage(newPage);
+      setIsLoading(false);
+    }, 600); // 600ms delay for smooth transition
+  }, [currentPage]);
 
   const handleSort = useCallback((field) => {
     if (sortBy === field) {
@@ -155,12 +168,19 @@ const InvoiceList = () => {
 
           {/* Results Count */}
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Showing {paginatedInvoices.length} of {filteredInvoices.length} invoice(s)
+            {isLoading ? (
+              <span className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
+                Loading invoices...
+              </span>
+            ) : (
+              `Showing ${paginatedInvoices.length} of ${filteredInvoices.length} invoice(s)`
+            )}
           </p>
         </div>
 
         {/* Invoice List */}
-        {paginatedInvoices.length === 0 ? (
+        {paginatedInvoices.length === 0 && !isLoading ? (
           <div className="text-center py-12">
             <p className="text-gray-500 dark:text-gray-400 text-lg">No invoices found</p>
             <p className="text-gray-400 dark:text-gray-500 text-sm mt-2">
@@ -172,24 +192,58 @@ const InvoiceList = () => {
         ) : (
           <>
             <div className="space-y-4">
-              {paginatedInvoices.map((invoice) => (
-                <InvoiceCard
-                  key={invoice.id}
-                  invoice={invoice}
-                  onMarkAsPaid={handleMarkAsPaid}
-                />
-              ))}
+              {isLoading ? (
+                // Loading skeleton
+                Array.from({ length: itemsPerPage }, (_, index) => (
+                  <div key={`skeleton-${index}`} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 animate-pulse">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-16 h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                        <div className="w-32 h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <div className="w-20 h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                        <div className="w-16 h-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                        <div className="w-20 h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                      </div>
+                    </div>
+                    <div className="mt-4 flex items-center justify-between">
+                      <div className="flex space-x-6">
+                        <div className="w-24 h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                        <div className="w-24 h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                        <div className="w-20 h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                      </div>
+                      <div className="w-24 h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                paginatedInvoices.map((invoice) => (
+                  <InvoiceCard
+                    key={invoice.id}
+                    invoice={invoice}
+                    onMarkAsPaid={handleMarkAsPaid}
+                  />
+                ))
+              )}
             </div>
 
             {/* Pagination */}
             {totalPages > 1 && (
               <div className="mt-6 flex items-center justify-center gap-2">
                 <button
-                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                  disabled={currentPage === 1}
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1 || isLoading}
                   className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
                 >
-                  Previous
+                  {isLoading && currentPage > 1 ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
+                      Loading...
+                    </div>
+                  ) : (
+                    'Previous'
+                  )}
                 </button>
                 
                 <span className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400">
@@ -197,11 +251,18 @@ const InvoiceList = () => {
                 </span>
                 
                 <button
-                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                  disabled={currentPage === totalPages}
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages || isLoading}
                   className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300"
                 >
-                  Next
+                  {isLoading && currentPage < totalPages ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
+                      Loading...
+                    </div>
+                  ) : (
+                    'Next'
+                  )}
                 </button>
               </div>
             )}
