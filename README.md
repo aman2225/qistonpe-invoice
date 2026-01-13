@@ -15,7 +15,7 @@ A comprehensive invoice management dashboard built for MSMEs to track invoices, 
    - Filter by status (Paid, Pending, Overdue, All)
    - Sort by Amount, Date, or Due Date (ascending/descending)
    - Search by invoice number or customer name
-   - Pagination for large datasets (15 items per page)
+   - Pagination for large datasets (10 items per page with realistic loading effects)
 
 2. **Summary Cards**
    - **Total Outstanding**: Sum of all pending + overdue invoices
@@ -51,6 +51,19 @@ A comprehensive invoice management dashboard built for MSMEs to track invoices, 
   - New invoice is added
   - Invoice is marked as paid
   - Filters are applied
+
+## ✨ Enhanced User Experience
+
+### Loading & Performance
+- **Realistic Pagination Loading**: Smooth 600ms loading effects when navigating between pages
+- **Skeleton Loading Cards**: Animated placeholders that mimic invoice layout during loading
+- **Loading Indicators**: Spinners and "Loading..." text on pagination buttons
+- **Smart Data Management**: Automatic regeneration of 150 sample invoices for fresh deployments
+
+### Responsive Design
+- **Dark/Light Theme**: Complete theme toggle with system preference detection
+- **Mobile-First**: Fully responsive design that works on all devices
+- **Accessible UI**: Proper contrast ratios and keyboard navigation support
 
 ## 🛠️ Tech Stack
 
