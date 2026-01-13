@@ -4,7 +4,7 @@ A comprehensive invoice management dashboard built for MSMEs to track invoices, 
 
 ## 🚀 Live Demo
 
-[Deploy on Netlify/Vercel and add your deployment URL here]
+[https://qistonpe-invoice.vercel.app](https://qistonpe-invoice.vercel.app)
 
 ## 📋 Features
 
@@ -231,8 +231,8 @@ The application follows a component-based architecture with clear separation of 
    - Immediate persistence is important for data integrity
    - localStorage operations are fast for this use case
 
-3. **Pagination Size**: 15 items per page. Could be configurable, but:
-   - 15 is a good balance between performance and usability
+3. **Pagination Size**: 10 items per page. Could be configurable, but:
+   - 10 is a good balance between performance and usability
    - Most users view invoices in smaller batches
    - Easy to change if needed
 
@@ -305,19 +305,6 @@ for (let i = 0; i < 500; i++) {
 
 ## 🚀 Deployment
 
-### Netlify Deployment
-
-1. Build the project:
-```bash
-npm run build
-```
-
-2. Deploy to Netlify:
-   - Connect your GitHub repository to Netlify
-   - Set build command: `npm run build`
-   - Set publish directory: `dist`
-   - Deploy!
-
 ### Vercel Deployment
 
 1. Install Vercel CLI:
@@ -351,14 +338,3 @@ npm install --save-dev gh-pages
 npm run deploy
 ```
 
-## 📄 License
-
-This project is built for QistonPe Front-End Developer Intern assessment.
-
-## 👤 Author
-
-[Your Name]
-
----
-
-**Note**: This application uses localStorage for data persistence. Data will be cleared if the user clears their browser data. For production use, consider integrating with a backend API.
