@@ -10,7 +10,7 @@ const InvoiceList = () => {
   const [sortOrder, setSortOrder] = useState('desc');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 15;
+  const itemsPerPage = 10;
 
   // Filter invoices
   const filteredInvoices = useMemo(() => {
